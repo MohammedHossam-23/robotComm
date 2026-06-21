@@ -155,7 +155,8 @@ class Stm32SerialBridge(Node):
             print("\n--- [RECEIVED DATA FROM STM32] ---")
             print(tx_msg)
             print("----------------------------------\n")
-
+            # Option B (Recommended): Use the ROS 2 Logger instead so it obeys ros2 CLI flags
+            self.get_logger().info(f"Received fields - Has odom: {tx_msg.HasField('odom')}, Has imu: {tx_msg.HasField('imu')}")
             # 5. Publish to ROS 2
             if tx_msg.HasField("odom"):
                 self.publish_odom(tx_msg.odom)
