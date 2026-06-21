@@ -65,33 +65,34 @@ class Stm32SerialBridge(Node):
         try:
             # 1. Protobuf Serialization
             rx_msg = rx_pb2.RxMsg()
-            
-            # Map ROS 2 Twist message to new Protobuf fields
             rx_msg.cmd_vel.linear_x = msg.linear.x
             rx_msg.cmd_vel.angular_z = msg.angular.z
             
             proto_data = rx_msg.SerializeToString()
 
-            # 2. Padding STM32 Hardware CRC
+            # 2. Padding to ensure we have full 32-bit words
             remainder = len(proto_data) % 4
             padded_data = proto_data
             if remainder > 0:
                 padded_data += b'\x00' * (4 - remainder)
 
+            # 3. Re-order bytes to match STM32 Hardware casting
             stm32_ordered_data = bytearray()
             for i in range(0, len(padded_data), 4):
                 word = padded_data[i:i+4]
+                # Flip the word: [0,1,2,3] -> [3,2,1,0]
                 stm32_ordered_data.extend(word[::-1])
 
+            # 4. Calculate CRC on the re-ordered data
             calc_crc = Crc32Mpeg2.calc(stm32_ordered_data)
 
-            # 3. Payload + CRC
+            # 5. Payload + CRC
             payload_with_crc = proto_data + struct.pack('<I', calc_crc)
 
-            # 4. COBS encoding + Frame Delimiter
-            encoded_data = cobs.encode(payload_with_crc) + b'\x00'
+            # 6. COBS encoding + Frame Delimiter (Explicitly cast to bytes)
+            encoded_data = cobs.encode(bytes(payload_with_crc)) + b'\x00'
 
-            # 5. Send to STM32
+            # 7. Send to STM32
             with self.serial_lock:
                 self.serial_port.write(encoded_data)
                 
@@ -122,8 +123,8 @@ class Stm32SerialBridge(Node):
 
     def process_incoming_frame(self, frame):
         try:
-            # 1. COBS decoding
-            decoded_data = cobs.decode(frame)
+            # 1. COBS decoding (Explicit conversion to bytes is safer for the cobs library)
+            decoded_data = cobs.decode(bytes(frame))
 
             if len(decoded_data) < 4:
                 return
@@ -132,36 +133,39 @@ class Stm32SerialBridge(Node):
             data_part = decoded_data[:-4]
             received_crc = struct.unpack('<I', decoded_data[-4:])[0]
 
-            # 3. Padding STM32 Hardware CRC for calculation
+            # 3. Padding to ensure we have full 32-bit words
             remainder = len(data_part) % 4
             padded_data = data_part
             if remainder > 0:
                 padded_data += b'\x00' * (4 - remainder)
 
+            # 4. THE FIX: Re-order bytes to match STM32 Hardware casting
             stm32_ordered_data = bytearray()
             for i in range(0, len(padded_data), 4):
                 word = padded_data[i:i+4]
+                # Flip the word: [0,1,2,3] -> [3,2,1,0]
                 stm32_ordered_data.extend(word[::-1])
 
+            # 5. Calculate CRC on the re-ordered data
             calc_crc = Crc32Mpeg2.calc(stm32_ordered_data)
 
             if calc_crc != received_crc:
                 self.get_logger().warn(f"❌ CRC Mismatch! Calc: {hex(calc_crc)} | Recv: {hex(received_crc)}")
                 return
 
-            # 4. Protobuf deserialization
+            # 6. Protobuf deserialization
             tx_msg = tx_pb2.TxMsg()
-            tx_msg.ParseFromString(data_part)
+            tx_msg.ParseFromString(bytes(data_part))
 
-            # 5. Publish to ROS 2
+            # 7. Publish to ROS 2
             if tx_msg.HasField("odom"):
                 self.publish_odom(tx_msg.odom)
                 
             if tx_msg.HasField("imu"):
                 self.publish_imu(tx_msg.imu)
 
-        except cobs.DecodeError:
-            self.get_logger().warn("⚠️ COBS Decode Error: Frame corrupted.")
+        except cobs.DecodeError as e:
+            self.get_logger().warn(f"⚠️ COBS Decode Error: {e}")
         except Exception as e:
             self.get_logger().error(f"❌ Frame processing error: {e}")
 
@@ -179,8 +183,8 @@ class Stm32SerialBridge(Node):
     def publish_odom(self, stm_odom):
         odom_msg = Odometry()
         
-        # Convert microseconds to ROS 2 Time components (sec, nanosec) using new proto field name
-        total_seconds = stm_odom.odom_time_stamp_us / 1000000.0
+        # Convert microseconds to ROS 2 Time components
+        total_seconds = stm_odom.odom_time_stamp_us / 1000000
         sec = int(total_seconds)
         nanosec = int((total_seconds - sec) * 1e9)
         odom_msg.header.stamp = Time(sec=sec, nanosec=nanosec)
@@ -193,7 +197,7 @@ class Stm32SerialBridge(Node):
         odom_msg.pose.pose.position.y = stm_odom.y
         odom_msg.pose.pose.position.z = 0.0
         
-        # Orientation (Dynamic Quaternion assignment)
+        # Orientation
         odom_msg.pose.pose.orientation = self.yaw_to_quaternion(stm_odom.yaw)
 
         # Velocity
@@ -205,8 +209,8 @@ class Stm32SerialBridge(Node):
     def publish_imu(self, stm_imu):
         imu_msg = Imu()
         
-        # Convert microseconds to ROS 2 Time components using new proto field name
-        total_seconds = stm_imu.mpu6500_time_stamp_us / 1000000.0
+        # Convert microseconds to ROS 2 Time components
+        total_seconds = stm_imu.mpu6500_time_stamp_us / 1000000
         sec = int(total_seconds)
         nanosec = int((total_seconds - sec) * 1e9)
         imu_msg.header.stamp = Time(sec=sec, nanosec=nanosec)
