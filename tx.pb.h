@@ -21,8 +21,8 @@ typedef struct _Odom {
     float linear_x;
     bool has_angular_z;
     float angular_z;
-    bool has_odomTimeStamp_us;
-    uint32_t odomTimeStamp_us;
+    bool has_odom_time_stamp_us;
+    uint32_t odom_time_stamp_us;
 } Odom;
 
 typedef struct _Imu {
@@ -38,8 +38,8 @@ typedef struct _Imu {
     float gy;
     bool has_gz;
     float gz;
-    bool has_mpu6500TimeStamp_us;
-    uint32_t mpu6500TimeStamp_us;
+    bool has_mpu6500_time_stamp_us;
+    uint32_t mpu6500_time_stamp_us;
 } Imu;
 
 typedef struct _ToFArray {
@@ -51,8 +51,8 @@ typedef struct _ToFArray {
     uint32_t cliff3;
     bool has_cliff4;
     uint32_t cliff4;
-    bool has_tofTimeStamp_us;
-    uint32_t tofTimeStamp_us;
+    bool has_tof_time_stamp_us;
+    uint32_t tof_time_stamp_us;
 } ToFArray;
 
 typedef struct _Battery {
@@ -63,12 +63,12 @@ typedef struct _Battery {
 } Battery;
 
 typedef struct _syncMsgTx {
-    bool has_piIintialTimeStamp_us;
-    uint32_t piIintialTimeStamp_us;
-    bool has_stm32RxTimeStamp_us;
-    uint32_t stm32RxTimeStamp_us;
-    bool has_stm32TxTimeStamp_us;
-    uint32_t stm32TxTimeStamp_us;
+    bool has_pi_initial_time_stamp_us;
+    uint32_t pi_initial_time_stamp_us;
+    bool has_stm32_rx_time_stamp_us;
+    uint32_t stm32_rx_time_stamp_us;
+    bool has_stm32_tx_time_stamp_us;
+    uint32_t stm32_tx_time_stamp_us;
 } syncMsgTx;
 
 typedef struct _TxMsg {
@@ -80,8 +80,8 @@ typedef struct _TxMsg {
     ToFArray tofArray;
     bool has_battery;
     Battery battery;
-    bool has_syncMsgTx;
-    syncMsgTx syncMsgTx;
+    bool has_sync_msg_tx;
+    syncMsgTx sync_msg_tx;
 } TxMsg;
 
 
@@ -109,29 +109,29 @@ extern "C" {
 #define Odom_yaw_tag                             3
 #define Odom_linear_x_tag                        4
 #define Odom_angular_z_tag                       5
-#define Odom_odomTimeStamp_us_tag                6
+#define Odom_odom_time_stamp_us_tag              6
 #define Imu_ax_tag                               1
 #define Imu_ay_tag                               2
 #define Imu_az_tag                               3
 #define Imu_gx_tag                               4
 #define Imu_gy_tag                               5
 #define Imu_gz_tag                               6
-#define Imu_mpu6500TimeStamp_us_tag              7
+#define Imu_mpu6500_time_stamp_us_tag            7
 #define ToFArray_cliff1_tag                      1
 #define ToFArray_cliff2_tag                      2
 #define ToFArray_cliff3_tag                      3
 #define ToFArray_cliff4_tag                      4
-#define ToFArray_tofTimeStamp_us_tag             5
+#define ToFArray_tof_time_stamp_us_tag           5
 #define Battery_ChargingState_tag                1
 #define Battery_StateOfCharge_tag                2
-#define syncMsgTx_piIintialTimeStamp_us_tag      1
-#define syncMsgTx_stm32RxTimeStamp_us_tag        2
-#define syncMsgTx_stm32TxTimeStamp_us_tag        3
+#define syncMsgTx_pi_initial_time_stamp_us_tag   1
+#define syncMsgTx_stm32_rx_time_stamp_us_tag     2
+#define syncMsgTx_stm32_tx_time_stamp_us_tag     3
 #define TxMsg_odom_tag                           1
 #define TxMsg_imu_tag                            2
 #define TxMsg_tofArray_tag                       3
 #define TxMsg_battery_tag                        4
-#define TxMsg_syncMsgTx_tag                      5
+#define TxMsg_sync_msg_tx_tag                    5
 
 /* Struct field encoding specification for nanopb */
 #define Odom_FIELDLIST(X, a) \
@@ -140,7 +140,7 @@ X(a, STATIC,   OPTIONAL, FLOAT,    y,                 2) \
 X(a, STATIC,   OPTIONAL, FLOAT,    yaw,               3) \
 X(a, STATIC,   OPTIONAL, FLOAT,    linear_x,          4) \
 X(a, STATIC,   OPTIONAL, FLOAT,    angular_z,         5) \
-X(a, STATIC,   OPTIONAL, UINT32,   odomTimeStamp_us,   6)
+X(a, STATIC,   OPTIONAL, UINT32,   odom_time_stamp_us,   6)
 #define Odom_CALLBACK NULL
 #define Odom_DEFAULT NULL
 
@@ -151,7 +151,7 @@ X(a, STATIC,   OPTIONAL, FLOAT,    az,                3) \
 X(a, STATIC,   OPTIONAL, FLOAT,    gx,                4) \
 X(a, STATIC,   OPTIONAL, FLOAT,    gy,                5) \
 X(a, STATIC,   OPTIONAL, FLOAT,    gz,                6) \
-X(a, STATIC,   OPTIONAL, UINT32,   mpu6500TimeStamp_us,   7)
+X(a, STATIC,   OPTIONAL, UINT32,   mpu6500_time_stamp_us,   7)
 #define Imu_CALLBACK NULL
 #define Imu_DEFAULT NULL
 
@@ -160,7 +160,7 @@ X(a, STATIC,   OPTIONAL, UINT32,   cliff1,            1) \
 X(a, STATIC,   OPTIONAL, UINT32,   cliff2,            2) \
 X(a, STATIC,   OPTIONAL, UINT32,   cliff3,            3) \
 X(a, STATIC,   OPTIONAL, UINT32,   cliff4,            4) \
-X(a, STATIC,   OPTIONAL, UINT32,   tofTimeStamp_us,   5)
+X(a, STATIC,   OPTIONAL, UINT32,   tof_time_stamp_us,   5)
 #define ToFArray_CALLBACK NULL
 #define ToFArray_DEFAULT NULL
 
@@ -171,9 +171,9 @@ X(a, STATIC,   OPTIONAL, FLOAT,    StateOfCharge,     2)
 #define Battery_DEFAULT NULL
 
 #define syncMsgTx_FIELDLIST(X, a) \
-X(a, STATIC,   OPTIONAL, UINT32,   piIintialTimeStamp_us,   1) \
-X(a, STATIC,   OPTIONAL, UINT32,   stm32RxTimeStamp_us,   2) \
-X(a, STATIC,   OPTIONAL, UINT32,   stm32TxTimeStamp_us,   3)
+X(a, STATIC,   OPTIONAL, UINT32,   pi_initial_time_stamp_us,   1) \
+X(a, STATIC,   OPTIONAL, UINT32,   stm32_rx_time_stamp_us,   2) \
+X(a, STATIC,   OPTIONAL, UINT32,   stm32_tx_time_stamp_us,   3)
 #define syncMsgTx_CALLBACK NULL
 #define syncMsgTx_DEFAULT NULL
 
@@ -182,14 +182,14 @@ X(a, STATIC,   OPTIONAL, MESSAGE,  odom,              1) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  imu,               2) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  tofArray,          3) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  battery,           4) \
-X(a, STATIC,   OPTIONAL, MESSAGE,  syncMsgTx,         5)
+X(a, STATIC,   OPTIONAL, MESSAGE,  sync_msg_tx,       5)
 #define TxMsg_CALLBACK NULL
 #define TxMsg_DEFAULT NULL
 #define TxMsg_odom_MSGTYPE Odom
 #define TxMsg_imu_MSGTYPE Imu
 #define TxMsg_tofArray_MSGTYPE ToFArray
 #define TxMsg_battery_MSGTYPE Battery
-#define TxMsg_syncMsgTx_MSGTYPE syncMsgTx
+#define TxMsg_sync_msg_tx_MSGTYPE syncMsgTx
 
 extern const pb_msgdesc_t Odom_msg;
 extern const pb_msgdesc_t Imu_msg;

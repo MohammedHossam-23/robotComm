@@ -6,7 +6,7 @@ message Odom {
    optional float yaw = 3;
    optional float linear_x = 4;
    optional float angular_z = 5;
-    optional uint32 odomTimeStamp_us= 6;
+    optional uint32 odom_time_stamp_us= 6;
 }
 
 message Imu {
@@ -16,7 +16,7 @@ message Imu {
     optional float gx = 4;
     optional float gy = 5;
     optional float gz = 6;
-    optional uint32 mpu6500TimeStamp_us = 7;
+    optional uint32 mpu6500_time_stamp_us = 7;
 }
 
 
@@ -25,7 +25,7 @@ message  ToFArray {
     optional uint32 cliff2 = 2;
     optional uint32 cliff3 = 3;
     optional uint32 cliff4 = 4;
-    optional uint32 tofTimeStamp_us = 5;
+    optional uint32 tof_time_stamp_us = 5;
 }
 
 message Battery {
@@ -34,9 +34,9 @@ message Battery {
 }
 
 message syncMsgTx {
-    optional uint32 piIintialTimeStamp_us = 1;
-    optional uint32 stm32RxTimeStamp_us = 2;
-    optional uint32 stm32TxTimeStamp_us = 3;    
+    optional uint32 pi_initial_time_stamp_us = 1;
+    optional uint32 stm32_rx_time_stamp_us = 2;
+    optional uint32 stm32_tx_time_stamp_us = 3;    
 }
 
 message  TxMsg {
@@ -44,5 +44,5 @@ message  TxMsg {
     optional Imu imu = 2;
     optional ToFArray tofArray = 3;
     optional Battery battery = 4;
-    optional syncMsgTx syncMsgTx = 5;
+    optional syncMsgTx sync_msg_tx = 5;
 }

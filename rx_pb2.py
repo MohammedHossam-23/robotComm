@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x08rx.proto\"J\n\x06\x43mdVel\x12\x14\n\x07linearX\x18\x01 \x01(\x02H\x00\x88\x01\x01\x12\x13\n\x06\x41ngleZ\x18\x02 \x01(\x02H\x01\x88\x01\x01\x42\n\n\x08_linearXB\t\n\x07_AngleZ\"c\n\x0bHardwareCmd\x12\x18\n\x0bvacuumState\x18\x02 \x01(\rH\x00\x88\x01\x01\x12\x19\n\x0cSideBrushCmd\x18\x03 \x01(\rH\x01\x88\x01\x01\x42\x0e\n\x0c_vacuumStateB\x0f\n\r_SideBrushCmd\"\xbd\x01\n\tsyncMsgRx\x12\"\n\x15piIintialTimeStamp_us\x18\x01 \x01(\rH\x00\x88\x01\x01\x12 \n\x13stm32RxTimeStamp_us\x18\x02 \x01(\rH\x01\x88\x01\x01\x12 \n\x13stm32TxTimeStamp_us\x18\x03 \x01(\rH\x02\x88\x01\x01\x42\x18\n\x16_piIintialTimeStamp_usB\x16\n\x14_stm32RxTimeStamp_usB\x16\n\x14_stm32TxTimeStamp_us\"\x9a\x01\n\x05RxMsg\x12\x1c\n\x06\x63mdVel\x18\x01 \x01(\x0b\x32\x07.CmdVelH\x00\x88\x01\x01\x12&\n\x0bhardwareCmd\x18\x02 \x01(\x0b\x32\x0c.HardwareCmdH\x01\x88\x01\x01\x12\"\n\tsyncMsgRx\x18\x03 \x01(\x0b\x32\n.syncMsgRxH\x02\x88\x01\x01\x42\t\n\x07_cmdVelB\x0e\n\x0c_hardwareCmdB\x0c\n\n_syncMsgRxb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x08rx.proto\"R\n\x06\x43mdVel\x12\x15\n\x08linear_x\x18\x01 \x01(\x02H\x00\x88\x01\x01\x12\x16\n\tangular_z\x18\x02 \x01(\x02H\x01\x88\x01\x01\x42\x0b\n\t_linear_xB\x0c\n\n_angular_z\"g\n\x0bHardwareCmd\x12\x19\n\x0cvacuum_state\x18\x02 \x01(\rH\x00\x88\x01\x01\x12\x1a\n\rside_brushcmd\x18\x03 \x01(\rH\x01\x88\x01\x01\x42\x0f\n\r_vacuum_stateB\x10\n\x0e_side_brushcmd\"\xcf\x01\n\tsyncMsgRx\x12%\n\x18pi_initial_time_stamp_us\x18\x01 \x01(\rH\x00\x88\x01\x01\x12#\n\x16stm32_rx_time_stamp_us\x18\x02 \x01(\rH\x01\x88\x01\x01\x12#\n\x16stm32_tx_time_stamp_us\x18\x03 \x01(\rH\x02\x88\x01\x01\x42\x1b\n\x19_pi_initial_time_stamp_usB\x19\n\x17_stm32_rx_time_stamp_usB\x19\n\x17_stm32_tx_time_stamp_us\"\xa2\x01\n\x05RxMsg\x12\x1d\n\x07\x63md_vel\x18\x01 \x01(\x0b\x32\x07.CmdVelH\x00\x88\x01\x01\x12\'\n\x0chardware_cmd\x18\x02 \x01(\x0b\x32\x0c.HardwareCmdH\x01\x88\x01\x01\x12$\n\x0bsync_msg_rx\x18\x03 \x01(\x0b\x32\n.syncMsgRxH\x02\x88\x01\x01\x42\n\n\x08_cmd_velB\x0f\n\r_hardware_cmdB\x0e\n\x0c_sync_msg_rxb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -32,11 +32,11 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'rx_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_CMDVEL']._serialized_start=12
-  _globals['_CMDVEL']._serialized_end=86
-  _globals['_HARDWARECMD']._serialized_start=88
-  _globals['_HARDWARECMD']._serialized_end=187
-  _globals['_SYNCMSGRX']._serialized_start=190
-  _globals['_SYNCMSGRX']._serialized_end=379
-  _globals['_RXMSG']._serialized_start=382
-  _globals['_RXMSG']._serialized_end=536
+  _globals['_CMDVEL']._serialized_end=94
+  _globals['_HARDWARECMD']._serialized_start=96
+  _globals['_HARDWARECMD']._serialized_end=199
+  _globals['_SYNCMSGRX']._serialized_start=202
+  _globals['_SYNCMSGRX']._serialized_end=409
+  _globals['_RXMSG']._serialized_start=412
+  _globals['_RXMSG']._serialized_end=574
 # @@protoc_insertion_point(module_scope)

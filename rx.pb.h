@@ -11,35 +11,35 @@
 
 /* Struct definitions */
 typedef struct _CmdVel {
-    bool has_linearX;
-    float linearX;
-    bool has_AngleZ;
-    float AngleZ;
+    bool has_linear_x;
+    float linear_x;
+    bool has_angular_z;
+    float angular_z;
 } CmdVel;
 
 typedef struct _HardwareCmd {
-    bool has_vacuumState;
-    uint32_t vacuumState;
-    bool has_SideBrushCmd;
-    uint32_t SideBrushCmd;
+    bool has_vacuum_state;
+    uint32_t vacuum_state;
+    bool has_side_brushcmd;
+    uint32_t side_brushcmd;
 } HardwareCmd;
 
 typedef struct _syncMsgRx {
-    bool has_piIintialTimeStamp_us;
-    uint32_t piIintialTimeStamp_us;
-    bool has_stm32RxTimeStamp_us;
-    uint32_t stm32RxTimeStamp_us;
-    bool has_stm32TxTimeStamp_us;
-    uint32_t stm32TxTimeStamp_us;
+    bool has_pi_initial_time_stamp_us;
+    uint32_t pi_initial_time_stamp_us;
+    bool has_stm32_rx_time_stamp_us;
+    uint32_t stm32_rx_time_stamp_us;
+    bool has_stm32_tx_time_stamp_us;
+    uint32_t stm32_tx_time_stamp_us;
 } syncMsgRx;
 
 typedef struct _RxMsg {
-    bool has_cmdVel;
-    CmdVel cmdVel;
-    bool has_hardwareCmd;
-    HardwareCmd hardwareCmd;
-    bool has_syncMsgRx;
-    syncMsgRx syncMsgRx;
+    bool has_cmd_vel;
+    CmdVel cmd_vel;
+    bool has_hardware_cmd;
+    HardwareCmd hardware_cmd;
+    bool has_sync_msg_rx;
+    syncMsgRx sync_msg_rx;
 } RxMsg;
 
 
@@ -58,46 +58,46 @@ extern "C" {
 #define RxMsg_init_zero                          {false, CmdVel_init_zero, false, HardwareCmd_init_zero, false, syncMsgRx_init_zero}
 
 /* Field tags (for use in manual encoding/decoding) */
-#define CmdVel_linearX_tag                       1
-#define CmdVel_AngleZ_tag                        2
-#define HardwareCmd_vacuumState_tag              2
-#define HardwareCmd_SideBrushCmd_tag             3
-#define syncMsgRx_piIintialTimeStamp_us_tag      1
-#define syncMsgRx_stm32RxTimeStamp_us_tag        2
-#define syncMsgRx_stm32TxTimeStamp_us_tag        3
-#define RxMsg_cmdVel_tag                         1
-#define RxMsg_hardwareCmd_tag                    2
-#define RxMsg_syncMsgRx_tag                      3
+#define CmdVel_linear_x_tag                      1
+#define CmdVel_angular_z_tag                     2
+#define HardwareCmd_vacuum_state_tag             2
+#define HardwareCmd_side_brushcmd_tag            3
+#define syncMsgRx_pi_initial_time_stamp_us_tag   1
+#define syncMsgRx_stm32_rx_time_stamp_us_tag     2
+#define syncMsgRx_stm32_tx_time_stamp_us_tag     3
+#define RxMsg_cmd_vel_tag                        1
+#define RxMsg_hardware_cmd_tag                   2
+#define RxMsg_sync_msg_rx_tag                    3
 
 /* Struct field encoding specification for nanopb */
 #define CmdVel_FIELDLIST(X, a) \
-X(a, STATIC,   OPTIONAL, FLOAT,    linearX,           1) \
-X(a, STATIC,   OPTIONAL, FLOAT,    AngleZ,            2)
+X(a, STATIC,   OPTIONAL, FLOAT,    linear_x,          1) \
+X(a, STATIC,   OPTIONAL, FLOAT,    angular_z,         2)
 #define CmdVel_CALLBACK NULL
 #define CmdVel_DEFAULT NULL
 
 #define HardwareCmd_FIELDLIST(X, a) \
-X(a, STATIC,   OPTIONAL, UINT32,   vacuumState,       2) \
-X(a, STATIC,   OPTIONAL, UINT32,   SideBrushCmd,      3)
+X(a, STATIC,   OPTIONAL, UINT32,   vacuum_state,      2) \
+X(a, STATIC,   OPTIONAL, UINT32,   side_brushcmd,     3)
 #define HardwareCmd_CALLBACK NULL
 #define HardwareCmd_DEFAULT NULL
 
 #define syncMsgRx_FIELDLIST(X, a) \
-X(a, STATIC,   OPTIONAL, UINT32,   piIintialTimeStamp_us,   1) \
-X(a, STATIC,   OPTIONAL, UINT32,   stm32RxTimeStamp_us,   2) \
-X(a, STATIC,   OPTIONAL, UINT32,   stm32TxTimeStamp_us,   3)
+X(a, STATIC,   OPTIONAL, UINT32,   pi_initial_time_stamp_us,   1) \
+X(a, STATIC,   OPTIONAL, UINT32,   stm32_rx_time_stamp_us,   2) \
+X(a, STATIC,   OPTIONAL, UINT32,   stm32_tx_time_stamp_us,   3)
 #define syncMsgRx_CALLBACK NULL
 #define syncMsgRx_DEFAULT NULL
 
 #define RxMsg_FIELDLIST(X, a) \
-X(a, STATIC,   OPTIONAL, MESSAGE,  cmdVel,            1) \
-X(a, STATIC,   OPTIONAL, MESSAGE,  hardwareCmd,       2) \
-X(a, STATIC,   OPTIONAL, MESSAGE,  syncMsgRx,         3)
+X(a, STATIC,   OPTIONAL, MESSAGE,  cmd_vel,           1) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  hardware_cmd,      2) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  sync_msg_rx,       3)
 #define RxMsg_CALLBACK NULL
 #define RxMsg_DEFAULT NULL
-#define RxMsg_cmdVel_MSGTYPE CmdVel
-#define RxMsg_hardwareCmd_MSGTYPE HardwareCmd
-#define RxMsg_syncMsgRx_MSGTYPE syncMsgRx
+#define RxMsg_cmd_vel_MSGTYPE CmdVel
+#define RxMsg_hardware_cmd_MSGTYPE HardwareCmd
+#define RxMsg_sync_msg_rx_MSGTYPE syncMsgRx
 
 extern const pb_msgdesc_t CmdVel_msg;
 extern const pb_msgdesc_t HardwareCmd_msg;

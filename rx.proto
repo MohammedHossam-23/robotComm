@@ -2,22 +2,22 @@ syntax = "proto3";
 
 
 message CmdVel {
-  optional float linearX = 1;
-  optional float AngleZ = 2;
+  optional float linear_x = 1;
+  optional float angular_z = 2;
 }
 
 message HardwareCmd {
-  optional uint32 vacuumState = 2;
-  optional uint32 SideBrushCmd = 3;
+  optional uint32 vacuum_state = 2;
+  optional uint32 side_brushcmd = 3;
 }
 
 message syncMsgRx {
-    optional uint32 piIintialTimeStamp_us = 1;
-    optional uint32 stm32RxTimeStamp_us = 2;
-    optional uint32 stm32TxTimeStamp_us = 3;    
+    optional uint32 pi_initial_time_stamp_us = 1;
+    optional uint32 stm32_rx_time_stamp_us = 2;
+    optional uint32 stm32_tx_time_stamp_us = 3;    
 }
 message RxMsg {
-  optional CmdVel cmdVel = 1;
-  optional HardwareCmd hardwareCmd = 2;
-  optional syncMsgRx syncMsgRx = 3;
+  optional CmdVel cmd_vel = 1;
+  optional HardwareCmd hardware_cmd = 2;
+  optional syncMsgRx sync_msg_rx = 3;
 }
