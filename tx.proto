@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+message Odom {
+   optional float x = 1;
+   optional float y = 2;
+   optional float yaw = 3;
+   optional float linear_x = 4;
+   optional float angular_z = 5;
+    optional uint32 odomTimeStamp_us= 6;
+}
+
+message Imu {
+    optional float ax = 1;
+    optional float ay = 2;
+    optional float az = 3;
+    optional float gx = 4;
+    optional float gy = 5;
+    optional float gz = 6;
+    optional uint32 mpu6500TimeStamp_us = 7;
+}
+
+
+message  ToFArray {
+    optional uint32 cliff1 = 1;
+    optional uint32 cliff2 = 2;
+    optional uint32 cliff3 = 3;
+    optional uint32 cliff4 = 4;
+    optional uint32 tofTimeStamp_us = 5;
+}
+
+message Battery {
+  optional uint32 ChargingState = 1;
+  optional float StateOfCharge = 2;
+}
+
+message syncMsgTx {
+    optional uint32 piIintialTimeStamp_us = 1;
+    optional uint32 stm32RxTimeStamp_us = 2;
+    optional uint32 stm32TxTimeStamp_us = 3;    
+}
+
+message  TxMsg {
+    optional Odom odom = 1;
+    optional Imu imu = 2;
+    optional ToFArray tofArray = 3;
+    optional Battery battery = 4;
+    optional syncMsgTx syncMsgTx = 5;
+}

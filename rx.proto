@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+
+message CmdVel {
+  optional float linearX = 1;
+  optional float AngleZ = 2;
+}
+
+message HardwareCmd {
+  optional uint32 vacuumState = 2;
+  optional uint32 SideBrushCmd = 3;
+}
+
+message syncMsgRx {
+    optional uint32 piIintialTimeStamp_us = 1;
+    optional uint32 stm32RxTimeStamp_us = 2;
+    optional uint32 stm32TxTimeStamp_us = 3;    
+}
+message RxMsg {
+  optional CmdVel cmdVel = 1;
+  optional HardwareCmd hardwareCmd = 2;
+  optional syncMsgRx syncMsgRx = 3;
+}
